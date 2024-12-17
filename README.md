@@ -104,6 +104,48 @@ To see available arguments and a list of supported data sources:
 python /ORION/Common/load_manager.py -h
 ```
 
+#### Installing DrugCentral
+In order to install these follow this pattern: 
+1. Make sure you have postgres installed and running
+`sudo systemctl start postgresql` or check `systemctl is-enabled postgresql`
+2. Download the data
+3. Extract the SQL file from the zip
+4. Examine the set_up_*_env.sh file for details and load them using `source` command
+5. Create the user and database
+```sh
+sudo -u postgres psql
+CREATE USER "example-user" WITH PASSWORD 'example-pass';
+CREATE DATABASE drugcentral OWNER "example-user";
+\q
+```
+1. Go to the SQL file loaction and load the data into the server
+```sh
+psql -U example-user -d drugcentral -h localhost -p 5432 -f drugcentral.dump.11012023.sql
+```
+
+#### Installing PHAROS
+In order to install these follow this pattern: 
+1. Make sure you have mysql installed and running
+`sudo apt install mysql-server -y`
+`sudo systemctl status mysql` and `sudo systemctl start mysql` if needed
+2. Download the data
+3. Extract the SQL file from the zip
+4. Examine the set_up_*_env.sh file for details and load them using `source` command
+5. Create the user and database
+```sh
+sudo mysql -u root -p
+CREATE DATABASE PHAROS;
+CREATE USER 'ds-user'@'localhost' IDENTIFIED BY 'ds-pass';
+GRANT ALL PRIVILEGES ON PHAROS.* TO 'ds-user'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+```
+1. Go to the SQL file loaction and load the data into the server
+```sh
+mysql -u ds-user -p PHAROS < TCRDv6.13.4.sql
+```
+
+
 ### For Developers
 
 To add a new data source to ORION, create a new parser. Each parser extends the SourceDataLoader interface in Common/loader_interface.py.
