@@ -1,4 +1,3 @@
-
 import os
 import enum
 import gzip
@@ -41,7 +40,7 @@ class GenomeAllianceOrthologLoader(SourceDataLoader):
         #self.genome_alliance_ortholog_file = 'ORTHOLOGY-ALLIANCE_COMBINED_25.tsv.gz'
         
         self.genome_alliance_url = 'https://fms.alliancegenome.org/download/'
-        self.self.genome_alliance_ortholog_file = 'ORTHOLOGY-ALLIANCE_COMBINED.tsv.gz'
+        self.genome_alliance_ortholog_file = 'ORTHOLOGY-ALLIANCE_COMBINED.tsv.gz'
         self.data_files = [self.genome_alliance_ortholog_file]
 
     def get_latest_source_version(self) -> str:

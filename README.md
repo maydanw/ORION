@@ -123,6 +123,29 @@ CREATE DATABASE drugcentral OWNER "example-user";
 psql -U example-user -d drugcentral -h localhost -p 5432 -f drugcentral.dump.11012023.sql
 ```
 
+**PrimeKG solution to review**
+```bash
+# Database: Drug Central, Script: drugcentral_queries.txt, Output: drug_disease.csv
+curl "https://unmtid-shinyapps.net/download/drugcentral.dump.05102023.sql.gz" -o data/drugcentral/drugcentral.dump.05102023.sql.gz
+gunzip data/drugcentral/drugcentral.dump.05102023.sql.gz
+
+# Initialize the PostgreSQL database.
+module load postgresql/15.2
+rm -rf /n/data1/hms/dbmi/zitnik/lab/users/an252/PrimeKG/datasets/data/drugcentral/db
+initdb -D /n/data1/hms/dbmi/zitnik/lab/users/an252/PrimeKG/datasets/data/drugcentral/db
+pg_ctl -D /n/data1/hms/dbmi/zitnik/lab/users/an252/PrimeKG/datasets/data/drugcentral/db -l logfile start
+# Server should now be started! Check with:
+pg_isready
+# Create the Drug Central database.
+createdb drugcentral
+psql drugcentral < drugcentral.dump.05102023.sql
+psql -d drugcentral -c "SELECT DISTINCT * FROM structures RIGHT JOIN (SELECT * FROM omop_relationship WHERE relationship_name IN ('indication', 'contraindication', 'off-label use')) AS drug_disease ON structures.id = drug_disease.struct_id;" -P format=csv -o drug_disease.csv
+
+# Database: Drug Central, Script: drugcentral_feature.Rmd, Output: dc_features.csv
+# TODO: run drugcentral_feature.Rmd.
+
+```
+
 #### Installing PHAROS
 In order to install these follow this pattern: 
 1. Make sure you have mysql installed and running
@@ -142,7 +165,8 @@ EXIT;
 ```
 1. Go to the SQL file loaction and load the data into the server
 ```sh
-mysql -u ds-user -p PHAROS < TCRDv6.13.4.sql
+sudo apt install pv -y
+pv TCRDv6.13.4.sql | mysql -u ds-user -p PHAROS
 ```
 
 
