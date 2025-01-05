@@ -39,12 +39,18 @@ class MonarchKGLoader(SourceDataLoader):
             'biolink:causes',
             'biolink:contributes_to',
             'biolink:has_phenotype',
-            'biolink:expressed_in'
+            'biolink:expressed_in',
+            'biolink:participates_in', # MW: Added this predicate
+            'biolink:associated_with_increased_likelihood_of', # MW: Added this predicate
+            'biolink:is_sequence_variant_of', # MW: Added this predicate
+            'biolink:genetically_associated_with', # MW: Added this predicate
+            'biolink:subclass_of', # MW: Added this predicate
+            'biolink:related_to' # MW: Added this predicate
         }
 
         self.knowledge_source_ignore_list = {
             'infores:ctd',
-            'infores:reactome',
+            # 'infores:reactome',  # MW: Allowing reactome
             'infores:goa',
             'infores:cafa',
             'infores:bhf-ucl',
