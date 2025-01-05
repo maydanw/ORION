@@ -1,7 +1,7 @@
-# Maydan KG 2.0 graph spec
+# Maydan KG 4.0 graph spec
 graphs:
 
-  - graph_id: SimpleKG2
+  - graph_id: SimpleKG4Ubergraph
     graph_name: ROBOKOP Simple KG neo4j
     graph_description: 'ROBOKOP Simple KG neo4j'
     graph_url:
@@ -9,7 +9,9 @@ graphs:
     # output_format: redundant_jsonl
     output_format: neo4j
     sources:
-      - source_id: MonarchKG
+      # - source_id: FooDB  # Added even due the parser needs validation
+      - source_id: SIGNOR
+      - source_id: MonarchKG  # Updated to parser to take much more data
       - source_id: MONDOProps
       - source_id: DrugCentral  # I need to verify all the data was preprocessed (I think last run it died in ~80%)
       - source_id: DrugMechDB
@@ -28,3 +30,5 @@ graphs:
       # - source_id: PHAROS
       - source_id: OntologicalHierarchy
         merge_strategy: connected_edge_subset
+      - source_id: UbergraphNonredundant
+# Can/Should I integrate HPO directly?
