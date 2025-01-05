@@ -17,3 +17,4 @@ pyoxigraph==0.3.22
 curies==0.7.9
 prefixmaps==0.2.4
 bmt==1.4.1
+requests_toolbelt==1.0.0

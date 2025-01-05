@@ -1,5 +1,5 @@
 # A docker container with neo4j, java and python for Data Services
-FROM neo4j:5.19.0-community-bullseye
+FROM neo4j:5.26-community-bullseye
 
 RUN apt-get update  \
     && apt-get -y install python3 \
@@ -15,6 +15,6 @@ RUN pip3 install -r /ORION/requirements.txt
 COPY . /ORION/.
 
 RUN chmod -R 777 /ORION
-
+RUN chmod -R 755 /var/lib/neo4j/data
 
 ENV PYTHONPATH "$PYTHONPATH:/ORION"
