@@ -9,7 +9,7 @@ from zipfile import ZipFile
 from Common.biolink_constants import *
 from Common.utils import GetData
 from Common.loader_interface import SourceDataLoader
-from Common.prefixes import CTD, HMDB, OMIM, UNIPROTKB
+from Common.prefixes import CTD, FOODB, HMDB, OMIM, UNIPROTKB
 from Common.kgxmodel import kgxnode, kgxedge
 
 
@@ -111,13 +111,13 @@ class HMDBLoader(SourceDataLoader):
                             node_properties = self.get_node_properties(el)
 
                             # get the nodes and edges for the pathways
-                            pathway_success: bool = self.get_pathways(el, metabolite_id)
+                            self.get_pathways(el, metabolite_id)
 
                             # get nodes and edges for the diseases
-                            disease_success: bool = self.get_diseases(el, metabolite_id)
+                            self.get_diseases(el, metabolite_id)
 
                             # get the nodes and edges for genes
-                            gene_success: bool = self.get_genes(el, metabolite_id)
+                            bool = self.get_genes(el, metabolite_id)
 
                             metabolite_node = kgxnode(
                                 metabolite_id,
@@ -180,6 +180,12 @@ class HMDBLoader(SourceDataLoader):
         if chemical_formula:
             node_properties['chemical_formula'] = safe_process_text(chemical_formula)
 
+        # Extract foodb_id
+        foodb_id = el.find('foodb_id').text if el.find('foodb_id') is not None else ''
+        if foodb_id:
+            node_properties['equivalent_identifiers'] = [safe_process_text(f"{FOODB}:{foodb_id}")]
+
+
         return node_properties
 
 
@@ -235,17 +241,26 @@ class HMDBLoader(SourceDataLoader):
                         protein_id = UNIPROTKB + ':' + protein.text
 
                         # what type of protein is this
-                        if protein_type.text.startswith('Enzyme'):
-                            # create the edge data
+                        if protein_type and protein_type.text.startswith('Enzyme'):
+                            # Enzyme type
                             subject_id: str = metabolite_id
                             object_id: str = protein_id
                             predicate: str = f'{CTD}:affects_abundance_of'
-                        # else it must be a transport?
-                        else:
-                            # create the edge data
+                        elif protein_type and protein_type.text.startswith('Transporter'):
+                            # Transporter type
                             subject_id: str = protein_id
                             object_id: str = metabolite_id
                             predicate: str = f'{CTD}:increases_transport_of'
+                        elif protein_type and protein_type.text.startswith('Receptor'):
+                            # Receptor type
+                            subject_id: str = protein_id
+                            object_id: str = metabolite_id
+                            predicate: str = f'{CTD}:binds_to'
+                        else:
+                            # Fallback for unclear or unhandled types
+                            subject_id: str = protein_id
+                            object_id: str = metabolite_id
+                            predicate: str = f'{CTD}:associated_with'
 
                         # get the name element
                         el_name: E_Tree.Element = p.find('name')
@@ -426,8 +441,15 @@ class HMDBLoader(SourceDataLoader):
                         else:
                             name: str = ''
 
+                        props = {}
+                        kegg_map_id: E_Tree.Element = p.find('kegg_map_id')
+                        if kegg_map_id is not None and kegg_map_id.text is not None:
+                            kegg_map_id: str = kegg_map_id.text
+                        if kegg_map_id:
+                            props["kegg_map_id"] = kegg_map_id
+
                         # create a node and add it to the list
-                        new_node = kgxnode(object_id, name=name)
+                        new_node = kgxnode(object_id, name=name, nodeprops=props)
                         self.output_file_writer.write_kgx_node(new_node)
 
                         edge_props = {KNOWLEDGE_LEVEL: KNOWLEDGE_ASSERTION,

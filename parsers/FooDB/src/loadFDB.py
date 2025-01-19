@@ -8,7 +8,7 @@ from parsers.FooDB.src.FoodSQL import FoodSQL
 from Common.loader_interface import SourceDataLoader, SourceDataFailedError
 from Common.utils import GetData
 from Common.kgxmodel import kgxnode, kgxedge
-from Common.prefixes import NCBITAXON
+from Common.prefixes import FOODB, NCBITAXON
 
 
 ##############
@@ -138,7 +138,7 @@ class FDBLoader(SourceDataLoader):
                     # add the food node
                     compound_id = f'{NCBITAXON}:{int(compound_record[cols["ncbi_taxonomy_id"]])}'
                     food_name = compound_record[cols['food_name']]
-                    compound_properties = {'foodb_id': food_id, 'content_type': 'food', 'nutrient': 'false'}
+                    compound_properties = {'foodb_id': FOODB +":" +food_id, 'content_type': 'food', 'nutrient': 'false'}
                     compound_node = kgxnode(compound_id, food_name, nodeprops=compound_properties)
                     compound_list.append(compound_node)
 
