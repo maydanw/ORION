@@ -175,15 +175,15 @@ graphs:
 #       - source_id: OntologicalHierarchy
 #         merge_strategy: connected_edge_subset
 
-#   - graph_id: HMDB_Automat
-#     graph_name: HMDB
-#     graph_description: 'The Human Metabolome DataBase (HMDB) is an openly accessible database containing detailed information about small molecule metabolites found in the human body, with links between chemical data, clinical data, and molecular biology/biochemistry data, including protein sequences (enzymes and transporters).'
-#     graph_url: https://hmdb.ca/
-#     output_format: neo4j
-#     sources:
-#       - source_id: HMDB
-#       - source_id: OntologicalHierarchy
-#         merge_strategy: connected_edge_subset
+  - graph_id: HMDB_Automat2
+    graph_name: HMDB2
+    graph_description: 'The Human Metabolome DataBase (HMDB) is an openly accessible database containing detailed information about small molecule metabolites found in the human body, with links between chemical data, clinical data, and molecular biology/biochemistry data, including protein sequences (enzymes and transporters).'
+    graph_url: https://hmdb.ca/
+    output_format: neo4j
+    sources:
+      - source_id: HMDB
+      - source_id: OntologicalHierarchy
+        merge_strategy: connected_edge_subset
 
 #   - graph_id: HumanGOA_Automat
 #     graph_name: Human GOA
@@ -255,13 +255,13 @@ graphs:
 #       - source_id: OntologicalHierarchy
 #         merge_strategy: connected_edge_subset
 
-  - graph_id: UbergraphRedundant_Automat
-    graph_name: Ubergraph
-    graph_description: 'Ubergraph is an open-source graph database containing integrated ontologies, including Gene Ontology (GO), Chemical Entities of Biological Interest (ChHEBI), Human Phenotype Ontology (HPO), and the Uber-anatomy ontology (Uberon)’s anatomical ontology.'
-    graph_url: https://github.com/INCATools/ubergraph
-    output_format: neo4j
-    sources:
-      - source_id: UbergraphRedundant
+  # - graph_id: UbergraphRedundant_Automat
+  #   graph_name: Ubergraph
+  #   graph_description: 'Ubergraph is an open-source graph database containing integrated ontologies, including Gene Ontology (GO), Chemical Entities of Biological Interest (ChHEBI), Human Phenotype Ontology (HPO), and the Uber-anatomy ontology (Uberon)’s anatomical ontology.'
+  #   graph_url: https://github.com/INCATools/ubergraph
+  #   output_format: neo4j
+  #   sources:
+  #     - source_id: UbergraphRedundant
 
 #   - graph_id: ViralProteome_Automat
 #     graph_name: Viral Proteome

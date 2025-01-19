@@ -9,7 +9,7 @@ CORD19 = 'Cord19'
 CTD = 'CTD'
 DRUG_CENTRAL = 'DrugCentral'
 DRUGMECHDB = 'DrugMechDB'
-# FOODB = 'FooDB' # this is on hold, data needs review after latest release of data.
+FOODB = 'FooDB' # this is on hold, data needs review after latest release of data.
 GENOME_ALLIANCE_ORTHOLOGS = 'GenomeAllianceOrthologs'
 GTEX = 'GTEx'
 GTOPDB = 'GtoPdb'
@@ -51,6 +51,7 @@ RESOURCE_HOGS = [GTEX, GWAS_CATALOG, UNIREF, ONTOLOGICAL_HIERARCHY, UBERGRAPH_RE
                  SGD, HUMAN_STRING]
 
 SOURCE_DATA_LOADER_CLASS_IMPORTS = {
+    FOODB: ('parsers.FooDB.src.loadFDB', 'FDBLoader'),
     BINDING_DB: ("parsers.BINDING.src.loadBINDINGDB", "BINDINGDBLoader"),
     CAM_KP: ("parsers.camkp.src.loadCAMKP", "CAMKPLoader"),
     CHEBI_PROPERTIES: ("parsers.chebi.src.loadChebiProperties", "ChebiPropertiesLoader"),
@@ -65,7 +66,8 @@ SOURCE_DATA_LOADER_CLASS_IMPORTS = {
     GWAS_CATALOG: ("parsers.GWASCatalog.src.loadGWASCatalog", "GWASCatalogLoader"),
     HETIO: ("parsers.hetio.src.loadHetio", "HetioLoader"),
     HGNC: ("parsers.hgnc.src.loadHGNC", "HGNCLoader"),
-    HMDB: ("parsers.hmdb.src.loadHMDB", "HMDBLoader"),
+    # HMDB: ("parsers.hmdb.src.loadHMDB", "HMDBLoader"),
+    HMDB: ("parsers.hmdb.src.loadHMDBmw", "HMDBLoader"),
     HUMAN_GOA: ("parsers.GOA.src.loadGOA", "HumanGOALoader"),
     HUMAN_STRING: ("parsers.STRING.src.loadSTRINGDB", "HumanSTRINGDBLoader"),
     INTACT: ("parsers.IntAct.src.loadIA", "IALoader"),

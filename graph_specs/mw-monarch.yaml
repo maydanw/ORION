@@ -1,16 +1,15 @@
-# Maydan KG 4.0 graph spec
+# Maydan KG 5.0 graph spec
 graphs:
 
-  - graph_id: SimpleKG4Ubergraph
-    graph_name: ROBOKOP Simple KG neo4j
-    graph_description: 'ROBOKOP Simple KG neo4j'
+  - graph_id: KG5LincsHetio
+    graph_name: ROBOKOP KG neo4j
+    graph_description: 'ROBOKOP KG neo4j'
     graph_url:
     conflation: True
     # output_format: redundant_jsonl
     output_format: neo4j
     sources:
       # - source_id: FooDB  # Added even due the parser needs validation
-      - source_id: SIGNOR
       - source_id: MonarchKG  # Updated to parser to take much more data
       - source_id: MONDOProps
       - source_id: DrugCentral  # I need to verify all the data was preprocessed (I think last run it died in ~80%)
@@ -31,4 +30,7 @@ graphs:
       - source_id: OntologicalHierarchy
         merge_strategy: connected_edge_subset
       - source_id: UbergraphNonredundant
+      - source_id: LINCS
+      - source_id: Hetio
+      - source_id: SIGNOR
 # Can/Should I integrate HPO directly?

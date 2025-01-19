@@ -23,7 +23,8 @@
                 "all"
             ],
             "env": {
-                "ORION_GRAPH_SPEC": "mw-monarch.yaml",
+                // "ORION_GRAPH_SPEC": "mw-monarch.yaml",
+                "ORION_GRAPH_SPEC": "default-graph-spec.yml",
                 "PYTHONPATH": "${env:PYTHONPATH};${workspaceFolder}",
                 "EDGE_NORMALIZATION_ENDPOINT": "https://bl-lookup-sri.renci.org/",
                 "NODE_NORMALIZATION_ENDPOINT": "https://nodenormalization-sri.renci.org/",
