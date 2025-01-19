@@ -36,7 +36,7 @@ class KGXFileWriter:
             if os.path.isfile(nodes_output_file_path):
                 # TODO verify - do we really want to overwrite existing files? we could remove them on previous errors instead
                 self.logger.warning(f'KGXFileWriter warning.. file already existed: {nodes_output_file_path}! Overwriting it!')
-            self.nodes_output_file_handler = open(nodes_output_file_path, 'w')
+            self.nodes_output_file_handler = open(nodes_output_file_path, 'w',encoding='utf-8')
             self.nodes_jsonl_writer = jsonlines.Writer(self.nodes_output_file_handler)
 
         self.edges_output_file_handler = None
@@ -44,7 +44,7 @@ class KGXFileWriter:
             if os.path.isfile(edges_output_file_path):
                 # TODO verify - do we really want to overwrite existing files? we could remove them on previous errors instead
                 self.logger.warning(f'KGXFileWriter warning.. file already existed: {edges_output_file_path}! Overwriting it!')
-            self.edges_output_file_handler = open(edges_output_file_path, 'w')
+            self.edges_output_file_handler = open(edges_output_file_path, 'w', encoding='utf-8')
             self.edges_jsonl_writer = jsonlines.Writer(self.edges_output_file_handler)
 
     def __enter__(self):
