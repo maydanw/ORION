@@ -150,7 +150,8 @@ class MetaKnowledgeGraphBuilder:
                     for qual, qual_val in edge_qualifier_values.items():
                         try:
                             if isinstance(qual_val, Iterable) and not isinstance(qual_val, (str, bytes)):
-                                [edge_type_key_to_qualifiers[edge_type_key][qual].add(val) for val in set(qual_val)]
+                                for val in qual_val:
+                                    edge_type_key_to_qualifiers[edge_type_key][qual].add(val)
                             else:
                                 edge_type_key_to_qualifiers[edge_type_key][qual].add(qual_val)
                         except TypeError as e:
