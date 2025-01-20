@@ -148,7 +148,7 @@ class HMDBLoader(SourceDataLoader):
 
     def get_node_properties(self, el) -> dict:
         node_properties = {}
-
+        equivalent_identifiers = []
         # Helper function to ensure proper UTF-8 handling
         def safe_process_text(text):
             if text:
@@ -157,10 +157,10 @@ class HMDBLoader(SourceDataLoader):
 
         # Extract secondary_accessions
         secondary_accessions = [
-            safe_process_text(acc.text) for acc in el.find('secondary_accessions').findall('accession') if acc.text
+            f"HMDB:{safe_process_text(acc.text)}" for acc in el.find('secondary_accessions').findall('accession') if acc.text
         ]
         if secondary_accessions:
-            node_properties['secondary_accessions'] = secondary_accessions
+            equivalent_identifiers+= secondary_accessions
 
         # Extract description
         description = safe_process_text(el.find('description').text) if el.find('description') is not None else ''
@@ -183,8 +183,10 @@ class HMDBLoader(SourceDataLoader):
         # Extract foodb_id
         foodb_id = el.find('foodb_id').text if el.find('foodb_id') is not None else ''
         if foodb_id:
-            node_properties['equivalent_identifiers'] = [safe_process_text(f"{FOODB}:{foodb_id}")]
+            equivalent_identifiers+=[safe_process_text(f"{FOODB}:{foodb_id}")]
 
+        if equivalent_identifiers:
+            node_properties['equivalent_identifiers'] = equivalent_identifiers
 
         return node_properties
 
