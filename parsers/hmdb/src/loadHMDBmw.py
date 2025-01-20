@@ -29,6 +29,7 @@ class HMDBLoader(SourceDataLoader):
     license = "https://hmdb.ca/about"
     attribution = "https://hmdb.ca/about#cite"
     parsing_version: str = '1.4'
+    preserve_unconnected_nodes = True
 
     def __init__(self, test_mode: bool = False, source_data_dir: str = None):
         """
